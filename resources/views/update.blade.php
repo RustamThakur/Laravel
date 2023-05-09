@@ -6,6 +6,7 @@
 	<title>ci cd</title>
 </head>
 <body>
+	<h2>Pulling new updated file</h2>
 
 </body>
 </html>
