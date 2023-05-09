@@ -12,6 +12,7 @@
 		<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addtask">
 		  Add Task
 		</button>
+        <php echo "test"; ?>
 		<a href="/edit">Edit Task</a>
 		@for($i=1;$i<10;$i++)
 		{{$i}}
