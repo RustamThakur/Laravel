@@ -36,12 +36,13 @@ jobs:
   display-commands:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
+      - name: Prompt for commands
+        id: prompt
+        run: |
+          echo "::set-env name=COMMANDS::$(read -p 'Enter commands: ' input && echo $input)"
+
       - name: Display commands
         run: |
           echo "Commands:"
           echo "--------"
-          echo "php artisan migrate"
-          echo "npm install"
-          # Add more echo statements for other commands
+          echo "${{ env.COMMANDS }}"
