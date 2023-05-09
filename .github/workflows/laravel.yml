@@ -22,12 +22,6 @@ jobs:
       - name: Install Composer dependencies
         run: composer install --no-ansi --no-interaction --no-scripts --no-progress --prefer-dist
 
-      - name: Generate application key
-        run: php artisan key:generate
-
-      - name: Run database migrations
-        run: php artisan migrate --force
-
       - name: Install Node.js
         uses: actions/setup-node@v2
         with:
