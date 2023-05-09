@@ -33,3 +33,15 @@ jobs:
         DB_CONNECTION: sqlite
         DB_DATABASE: database/database.sqlite
       run: vendor/bin/phpunit
+  display-commands:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+      - name: Display commands
+        run: |
+          echo "Commands:"
+          echo "--------"
+          echo "php artisan migrate"
+          echo "npm install"
+          # Add more echo statements for other commands
