@@ -30,8 +30,5 @@ jobs:
       - name: Install NPM dependencies
         run: npm install
 
-      - name: Build assets
-        run: npm run build
-
       - name: Run tests
         run: php artisan test
