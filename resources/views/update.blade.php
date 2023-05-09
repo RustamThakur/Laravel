@@ -6,7 +6,7 @@
 	<title>ci cd</title>
 </head>
 <body>
-	<h2>Pulling new updated file</h2>
+	<h2>update in update blade file</h2>
 
 </body>
 </html>
