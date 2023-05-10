@@ -50,7 +50,10 @@ jobs:
           DB_USERNAME: ${{ secrets.DB_USERNAME }}
           DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
           DB_AUTHENTICATION: ${{ secrets.DB_AUTHENTICATION }}
-        run: php artisan migrate
+        run: |
+          php artisan config:clear
+          php artisan cache:clear
+          php artisan migrate
         
 
   npm-install:
