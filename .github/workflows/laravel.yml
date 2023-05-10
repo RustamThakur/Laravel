@@ -30,14 +30,9 @@ jobs:
         touch database/database.sqlite
     - name: Execute tests (Unit and Feature tests) via PHPUnit
       env:
-        DB_CONNECTION: mysql
-        DB_DATABASE: database/database.mysql
+        DB_CONNECTION: sqlite
+        DB_DATABASE: database/database.sqlite
       run: vendor/bin/phpunit
-    - name: Run Database Migrations
-      run: php artisan migrate --force
-
-    - name: Run Tests
-      run: php artisan test
   display-commands:
     runs-on: ubuntu-latest
     steps:
