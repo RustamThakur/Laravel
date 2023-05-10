@@ -34,6 +34,13 @@ jobs:
         run: php -r "file_exists('.env') || copy('.env.example', '.env');"
       - name: Install Composer dependencies
         run: composer install --no-progress --no-suggest
+      - name: Configure MySQL credentials
+        run: |
+          echo "DB_HOST=my_mysql_host" >> .env
+          echo "DB_PORT=my_mysql_port" >> .env
+          echo "DB_DATABASE=my_mysql_database" >> .env
+          echo "DB_USERNAME=my_mysql_username" >> .env
+          echo "DB_PASSWORD=my_mysql_password" >> .env
       - name: Execute database migrations
         run: php artisan migrate --force
 
