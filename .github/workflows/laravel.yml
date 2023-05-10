@@ -13,7 +13,7 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
       - name: Set up PHP
-        uses: shivammathur/setup-php@v15
+        uses: shivammathur/setup-php@v2
         with:
           php-version: '8.0'
       - name: Install Composer dependencies
@@ -27,7 +27,7 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
       - name: Set up PHP
-        uses: shivammathur/setup-php@v15
+        uses: shivammathur/setup-php@v2
         with:
           php-version: '8.0'
       - name: Copy .env
@@ -48,4 +48,3 @@ jobs:
           node-version: 14
       - name: Install dependencies
         run: npm ci
-
