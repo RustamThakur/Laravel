@@ -46,7 +46,6 @@ jobs:
             php artisan config:clear
             php artisan cache:clear
             php artisan key:generate
-            npm run build
             php artisan migrate
         
 
