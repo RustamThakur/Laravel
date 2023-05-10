@@ -38,9 +38,6 @@ jobs:
         run: php --version
       - name: Verify MySQL/MariaDB Connectivity
         run: telnet mysql 3306
-      - name: Verify Database Existence
-        run: mysql -u root -p password -h 127.0.0.1 -P 3306 -e "SHOW DATABASES LIKE 'laravel'"
-
       - name: Configure MySQL credentials
         run: |
           echo "DB_HOST=127.0.0.1" >> .env
