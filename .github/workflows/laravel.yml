@@ -34,9 +34,16 @@ jobs:
         run: php -r "file_exists('.env') || copy('.env.example', '.env');"
       - name: Install Composer dependencies
         run: composer install --no-progress --no-suggest
+      - name: Verify PHP Version
+        run: php --version
+      - name: Verify MySQL/MariaDB Connectivity
+        run: telnet mysql 3306
+      - name: Verify Database Existence
+        run: mysql -u root -p<password> -h 127.0.0.1 -P 3306 -e "SHOW DATABASES LIKE 'laravel'"
+
       - name: Configure MySQL credentials
         run: |
-          echo "DB_HOST=mysql" >> .env
+          echo "DB_HOST=127.0.0.1" >> .env
           echo "DB_PORT=3306" >> .env
           echo "DB_DATABASE=laravel" >> .env
           echo "DB_USERNAME=root" >> .env
