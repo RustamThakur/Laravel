@@ -50,7 +50,7 @@ jobs:
           echo "DB_PASSWORD: $DB_PASSWORD"
       - name: Run migrations
         env:
-          DB_CONNECTION: mysql
+          DB_CONNECTION: ${{ env.DB_CONNECTION }}
           DB_HOST: ${{ env.DB_HOST }}
           DB_PORT: ${{ env.DB_PORT }}
           DB_DATABASE: ${{ env.DB_DATABASE }}
