@@ -25,6 +25,10 @@ jobs:
         DB_CONNECTION: sqlite
         DB_DATABASE: database/database.sqlite
       run: vendor/bin/phpunit
+    - name: Install Composer dependencies
+      run: composer install --no-progress --no-suggest
+    - name: Update Composer dependencies
+      run: composer update --no-progress --no-suggest
     - name: Set up Node.js
       uses: actions/setup-node@v2
       with:
