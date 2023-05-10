@@ -41,12 +41,15 @@ jobs:
           echo "DB_DATABASE=laravel" >> .env
           echo "DB_USERNAME=root" >> .env
           echo "DB_PASSWORD=password" >> .env
-      - name: Execute database migrations
-        run: |
-            php artisan config:clear
-            php artisan cache:clear
-            php artisan key:generate
-            php artisan migrate
+      - name: Run migrations
+        env:
+          DB_CONNECTION: mysql
+          DB_HOST: ${{ secrets.PHP_ARTISAN_MIGRATE_SECRET }}
+          DB_PORT: ${{ secrets.PHP_ARTISAN_MIGRATE_SECRET }}
+          DB_DATABASE: ${{ secrets.PHP_ARTISAN_MIGRATE_SECRET }}
+          DB_USERNAME: ${{ secrets.PHP_ARTISAN_MIGRATE_SECRET }}
+          DB_PASSWORD: ${{ secrets.PHP_ARTISAN_MIGRATE_SECRET }}
+        run: php artisan migrate
         
 
   npm-install:
