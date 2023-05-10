@@ -34,13 +34,13 @@ jobs:
         DB_DATABASE: database/database.sqlite
       run: vendor/bin/phpunit
     - name: Generate Application Key
-        run: php artisan key:generate
+      run: php artisan key:generate
 
-      - name: Run Database Migrations
-        run: php artisan migrate --force
+    - name: Run Database Migrations
+      run: php artisan migrate --force
 
-      - name: Run Tests
-        run: php artisan test
+    - name: Run Tests
+      run: php artisan test
   display-commands:
     runs-on: ubuntu-latest
     steps:
