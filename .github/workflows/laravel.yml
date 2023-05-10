@@ -54,6 +54,13 @@ jobs:
           php artisan config:clear
           php artisan cache:clear
           php artisan migrate
+      - name: Debug Environment Variables
+        run: |
+          echo "DB_HOST: $DB_HOST"
+          echo "DB_PORT: $DB_PORT"
+          echo "DB_DATABASE: $DB_DATABASE"
+          echo "DB_USERNAME: $DB_USERNAME"
+          echo "DB_PASSWORD: $DB_PASSWORD"
         
 
   npm-install:
