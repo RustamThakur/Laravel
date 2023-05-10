@@ -36,11 +36,11 @@ jobs:
         run: composer install --no-progress --no-suggest
       - name: Configure MySQL credentials
         run: |
-          echo "DB_HOST=my_mysql_host" >> .env
-          echo "DB_PORT=my_mysql_port" >> .env
-          echo "DB_DATABASE=my_mysql_database" >> .env
-          echo "DB_USERNAME=my_mysql_username" >> .env
-          echo "DB_PASSWORD=my_mysql_password" >> .env
+          echo "DB_HOST=127.0.0.1" >> .env
+          echo "DB_PORT=3306" >> .env
+          echo "DB_DATABASE=laravel" >> .env
+          echo "DB_USERNAME=root" >> .env
+          echo "DB_PASSWORD=password" >> .env
       - name: Execute database migrations
         run: php artisan migrate --force
 
