@@ -13,8 +13,9 @@ class UpdateLaravelCrudTable extends Migration
      */
     public function up()
     {
-        Schema::table('laravel_crud', function (Blueprint $table) {
-            //
+        Schema::table('users', function (Blueprint $table) {
+            $table->string('email');
+            $table->string('password');
         });
     }
 
@@ -25,8 +26,6 @@ class UpdateLaravelCrudTable extends Migration
      */
     public function down()
     {
-        Schema::table('laravel_crud', function (Blueprint $table) {
-            //
-        });
+        //
     }
 }
