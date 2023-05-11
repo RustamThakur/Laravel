@@ -17,7 +17,7 @@ jobs:
         with:
           php-version: '8.0'
       - name: Install Composer dependencies
-        run: composer install --no-interaction --no-suggest --ignore-platform-reqs
+        run: composer install --no-progress --no-suggest
       - name: Update Composer dependencies
         run: composer update --no-progress --no-suggest
 
@@ -78,3 +78,17 @@ jobs:
           node-version: 14
       - name: Install dependencies
         run: npm ci
+services:
+    mysql:
+        image: mysql:5.7
+        env:
+            MYSQL_ALLOW_EMPTY_PASSWORD: yes
+            MYSQL_DATABASE: laravel
+        ports:
+            - 3306
+        options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3
+      name: Execute tests
+        run: vendor/bin/phpunit
+        env:
+            DB_PORT: ${{ job.services.mysql.ports[3306] }}
+
