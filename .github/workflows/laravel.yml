@@ -45,6 +45,9 @@ jobs:
           echo "DB_PASSWORD=password" >> .env
       - name: Display Environment Variables
         run: env
+      - name: Test Database Connection
+        run: |
+          php artisan db:test
 
       - name: Debug Environment Variables
         run: |
@@ -67,9 +70,6 @@ jobs:
           php artisan cache:clear
           php artisan migrate --force 
 
-      - name: Test Database Connection
-        run: |
-          php artisan db:test
       
 
   npm-install:
