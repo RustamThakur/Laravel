@@ -49,7 +49,7 @@ jobs:
         run: |
           php artisan db:test
       - name: Display DB_HOST
-        run: echo ${{ secrets.DB_HOST }}
+        run: echo "${{ steps.db_host.outputs.DB_HOST }}"
 
       - name: Debug Environment Variables
         run: |
