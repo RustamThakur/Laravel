@@ -43,6 +43,9 @@ jobs:
           echo "DB_DATABASE=laravel" >> .env
           echo "DB_USERNAME=root" >> .env
           echo "DB_PASSWORD=password" >> .env
+      - name: Display Environment Variables
+        run: env
+
       - name: Debug Environment Variables
         run: |
           echo "DB_HOST: ${{ env.DB_HOST }}"
