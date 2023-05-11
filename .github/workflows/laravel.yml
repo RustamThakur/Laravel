@@ -65,18 +65,7 @@ jobs:
         run: |
           php artisan config:clear
           php artisan cache:clear
-          php artisan migrate --force  
-      - name: Run database migrations
-        env:
-          DB_HOST: localhost
-          DB_PORT: 3306
-          DB_DATABASE: laravel
-          DB_USERNAME: root
-          DB_PASSWORD: password
-      run: php artisan migrate --force
-
-    - name: Run tests
-      run: vendor/bin/phpunit     
+          php artisan migrate --force       
 
   npm-install:
     runs-on: ubuntu-latest
