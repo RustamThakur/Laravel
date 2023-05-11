@@ -48,20 +48,20 @@ jobs:
 
       - name: Debug Environment Variables
         run: |
-          echo "DB_HOST: {{ env.DB_HOST }}"
-          echo "DB_PORT: {{ env.DB_PORT }}"
+          echo "DB_HOST: ${{ secrets.DB_HOST }}"
+          echo "DB_PORT: ${{ secrets.DB_PORT }}"
           echo "DB_DATABASE: $DB_DATABASE"
           echo "DB_USERNAME: $DB_USERNAME"
           echo "DB_PASSWORD: $DB_PASSWORD"
       - name: Run migrations
         env:
-          DB_CONNECTION: ${{ env.DB_CONNECTION }}
-          DB_HOST: ${{ env.DB_HOST }}
-          DB_PORT: ${{ env.DB_PORT }}
-          DB_DATABASE: ${{ env.DB_DATABASE }}
-          DB_USERNAME: ${{ env.DB_USERNAME }}
-          DB_PASSWORD: ${{ env.DB_PASSWORD }}
-          DB_AUTHENTICATION: ${{ env.DB_AUTHENTICATION }}
+          DB_CONNECTION: ${{ secrets.DB_CONNECTION }}
+          DB_HOST: ${{ secrets.DB_HOST }}
+          DB_PORT: ${{ secrets.DB_PORT }}
+          DB_DATABASE: ${{ secrets.DB_DATABASE }}
+          DB_USERNAME: ${{ secrets.DB_USERNAME }}
+          DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
+          DB_AUTHENTICATION: ${{ secrets.DB_AUTHENTICATION }}
         run: |
           php artisan config:clear
           php artisan cache:clear
