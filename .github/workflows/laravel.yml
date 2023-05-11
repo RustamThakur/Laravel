@@ -48,6 +48,14 @@ jobs:
       - name: Test Database Connection
         run: |
           php artisan db:test
+      - name: Set up MySQL
+        run: |
+          sudo apt-get update
+          sudo apt-get install mysql-client
+
+      - name: Connect to MySQL
+        run: |
+          mysql -h ${{ secrets.DB_HOST }} -u ${{ secrets.DB_USERNAME }} -p"${{ secrets.DB_PASSWORD }}" -e "SELECT * FROM users;"
 
       - name: Debug Environment Variables
         run: |
@@ -58,13 +66,13 @@ jobs:
           echo "DB_PASSWORD: $DB_PASSWORD"
       - name: Run migrations
         env:
-          DB_CONNECTION: ${{ env.DB_CONNECTION }}
-          DB_HOST: ${{ env.DB_HOST }}
-          DB_PORT: ${{ env.DB_PORT }}
-          DB_DATABASE: ${{ env.DB_DATABASE }}
-          DB_USERNAME: ${{ env.DB_USERNAME }}
-          DB_PASSWORD: ${{ env.DB_PASSWORD }}
-          DB_AUTHENTICATION: ${{ env.DB_AUTHENTICATION }}
+          DB_CONNECTION: ${{ secrets.DB_CONNECTION }}
+          DB_HOST: ${{ secrets.DB_HOST }}
+          DB_PORT: ${{ secrets.DB_PORT }}
+          DB_DATABASE: ${{ secrets.DB_DATABASE }}
+          DB_USERNAME: ${{ secrets.DB_USERNAME }}
+          DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
+          DB_AUTHENTICATION: ${{ secrets.DB_AUTHENTICATION }}
         run: |
           php artisan config:clear
           php artisan cache:clear
