@@ -55,10 +55,13 @@ jobs:
           echo "DB_PASSWORD: $DB_PASSWORD"
       - name: Run migrations
         env:
+          DB_CONNECTION: ${{ secrets.DB_CONNECTION }}
+          DB_HOST: ${{ secrets.DB_HOST }}
+          DB_PORT: ${{ secrets.DB_PORT }}
+          DB_DATABASE: ${{ secrets.DB_DATABASE }}
           DB_USERNAME: ${{ secrets.DB_USERNAME }}
           DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
-        ports:
-          - 33306:3306
+          DB_AUTHENTICATION: ${{ secrets.DB_AUTHENTICATION }}
         run: |
           php artisan config:clear
           php artisan cache:clear
