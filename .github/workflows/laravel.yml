@@ -65,7 +65,12 @@ jobs:
         run: |
           php artisan config:clear
           php artisan cache:clear
-          php artisan migrate --force       
+          php artisan migrate --force 
+
+      - name: Test Database Connection
+        run: |
+          php artisan db:test
+      
 
   npm-install:
     runs-on: ubuntu-latest
