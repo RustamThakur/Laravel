@@ -65,7 +65,8 @@ jobs:
         run: |
           php artisan config:clear
           php artisan cache:clear
-          php artisan migrate --force       
+          php artisan migrate --force 
+          vendor/phpunit/phpunit/phpunit      
 
   npm-install:
     runs-on: ubuntu-latest
