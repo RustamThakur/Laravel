@@ -1,89 +1,38 @@
-name: Laravel
-
+name: Forest CI
+env:
+  MYSQL_DATABASE: laravel
+  MYSQL_USER: root
+  MYSQL_PASSWORD: password
+  MYSQL_HOST: 127.0.0.1
+  NODE_ENV: test
 on:
   push:
-    branches: [ "laravel_main" ]
-  pull_request:
-    branches: [ "laravel_main" ]
-
 jobs:
-  composer-update:
+  ci:
     runs-on: ubuntu-latest
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v3
-      - name: Set up PHP
-        uses: shivammathur/setup-php@v2
-        with:
-          php-version: '8.0'
-      - name: Install Composer dependencies
-        run: composer install --no-progress --no-suggest
-      - name: Update Composer dependencies
-        run: composer update --no-progress --no-suggest
-
-  database-migrate:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v3
-      - name: Set up PHP
-        uses: shivammathur/setup-php@v2
-        with:
-          php-version: '8.0'
-      - name: Copy .env
-        run: php -r "file_exists('.env') || copy('.env.example', '.env');"
-      - name: Install Composer dependencies
-        run: composer install --no-progress --no-suggest
-      - name: Verify PHP Version
-        run: php --version
-      - name: Configure MySQL credentials
-        run: |
-          echo "DB_HOST=127.0.0.1" >> .env
-          echo "DB_PORT=3306" >> .env
-          echo "DB_DATABASE=laravel" >> .env
-          echo "DB_USERNAME=root" >> .env
-          echo "DB_PASSWORD=password" >> .env
-      - name: Display Environment Variables
-        run: env
-      - name: Test Database Connection
-        run: |
-          php artisan db:test
-      - name: Set up MySQL
-        run: |
-          sudo apt-get update
-          sudo apt-get install mysql-client
-
-      - name: Debug Environment Variables
-        run: |
-          echo "DB_HOST: ${{ secrets.DB_HOST }}"
-          echo "DB_PORT: ${{ secrets.DB_PORT }}"
-          echo "DB_DATABASE: $DB_DATABASE"
-          echo "DB_USERNAME: $DB_USERNAME"
-          echo "DB_PASSWORD: $DB_PASSWORD"
-      - name: Run migrations
+    container:
+      image: node:14.5.0-alpine
+    services:
+      mysql-master:
+        image: mysql:5.7
+        ports:
+          - 3306/tcp
         env:
-          DB_CONNECTION: ${{ secrets.DB_CONNECTION }}
-          DB_HOST: ${{ secrets.DB_HOST }}
-          DB_PORT: ${{ secrets.DB_PORT }}
-          DB_DATABASE: ${{ secrets.DB_DATABASE }}
-          DB_USERNAME: ${{ secrets.DB_USERNAME }}
-          DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
-          DB_AUTHENTICATION: ${{ secrets.DB_AUTHENTICATION }}
-        run: |
-          php artisan config:clear
-          php artisan cache:clear
-          #php artisan migrate --force 
-
-      
-
-  npm-install:
-    runs-on: ubuntu-latest
+          MYSQL_DATABASE: ${{ env.DB_DATABASE }}
+          MYSQL_USER: ${{ env.DB_USERNAME }}
+          MYSQL_PASSWORD: ${{ env.DB_PASSWORD }}
+          MYSQL_ROOT_PASSWORD: ${{ env.DB_PASSWORD }}
+        options: >-
+          --name=mysql-master
+          --health-cmd="mysqladmin ping"
+          --health-interval=10s
+          --health-timeout=5s
+          --health-retries=3
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v3
-      - name: Set up Node.js
-        uses: actions/setup-node@v2
-        with:
-          node-version: 14
-      - name: Install dependencies
-        run: npm ci
+      - uses: actions/checkout@v2
+      - name: Install packages
+        run: "npm ci"
+      - name: Setup Database
+        run: "npm run migrations"
+      - name: Run Tests
+        run: "npm run test"
