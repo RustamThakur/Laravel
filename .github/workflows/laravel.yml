@@ -55,7 +55,7 @@ jobs:
 
       - name: Connect to MySQL
         run: |
-          mysql -h ${{ secrets.DB_HOST }} -u ${{ secrets.DB_USERNAME }} -p"${{ secrets.DB_PASSWORD }}" -e "SELECT * FROM users;"
+          mysql -h ${{ env.DB_HOST }} -u ${{ env.DB_USERNAME }} -p"${{ env.DB_PASSWORD }}" -e "SELECT * FROM users;"
 
       - name: Debug Environment Variables
         run: |
