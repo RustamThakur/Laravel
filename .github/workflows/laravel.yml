@@ -29,7 +29,7 @@ jobs:
       - name: Set up PHP
         uses: shivammathur/setup-php@v2
         with:
-          php-version: '7.3'
+          php-version: '8.0'
       - name: Copy .env
         run: php -r "file_exists('.env') || copy('.env.example', '.env');"
       - name: Install Composer dependencies
@@ -53,10 +53,6 @@ jobs:
           sudo apt-get update
           sudo apt-get install mysql-client
 
-      - name: Connect to MySQL
-        run: |
-          mysql -h ${{ env.DB_HOST }} -u ${{ env.DB_USERNAME }} -p"${{ env.DB_PASSWORD }}" -e "SELECT * FROM users;"
-
       - name: Debug Environment Variables
         run: |
           echo "DB_HOST: ${{ secrets.DB_HOST }}"
@@ -76,8 +72,7 @@ jobs:
         run: |
           php artisan config:clear
           php artisan cache:clear
-          php artisan migrate --force 
-
+          #php artisan migrate --force 
 
       
 
@@ -92,6 +87,3 @@ jobs:
           node-version: 14
       - name: Install dependencies
         run: npm ci
-
-      - name: Run database migrations
-        run: php artisan migrate --force
