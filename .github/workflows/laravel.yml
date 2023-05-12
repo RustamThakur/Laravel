@@ -78,6 +78,7 @@ jobs:
           php artisan cache:clear
           php artisan migrate --force 
 
+
       
 
   npm-install:
@@ -91,3 +92,6 @@ jobs:
           node-version: 14
       - name: Install dependencies
         run: npm ci
+
+      - name: Run database migrations
+        run: php artisan migrate
