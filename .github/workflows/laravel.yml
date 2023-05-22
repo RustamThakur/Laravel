@@ -26,17 +26,8 @@ jobs:
         run: composer install --no-progress --no-suggest
       - name: Update Composer dependencies
         run: composer update --no-progress --no-suggest
-      - name: Find Laravel project directory
-        run: |
-          ls -la
-          if [[ -d "Laravel" ]]; then
-            cd Laravel
-          elif [[ -d "laravel" ]]; then
-            cd laravel
-          else
-            echo "Unable to find Laravel project directory"
-            exit 1
-          fi
+      - name: Change directory to Laravel project
+        run: cd Laravel
       - name: Run database seeder
         run: php artisan db:seed
       - name: Pull latest changes
