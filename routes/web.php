@@ -14,12 +14,8 @@ use App\Http\Controllers\CrudController;
 |
 */
 
-Artisan::call('migrate');
-
-Route::get('/', function() {
-   Artisan::call('migrate');
-
-  return view('welcome');
+Route::get('/', function () {
+    return view('welcome');
 });
 
 //Route:: get('/crud',[CrudController::class, 'index']);
