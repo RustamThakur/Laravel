@@ -74,7 +74,14 @@ jobs:
           php artisan cache:clear
           #php artisan migrate --force 
 
-      
+
+  command-run:
+    steps:
+      - name: Seed database
+        command: php artisan db:seed
+      - name: Pull latest changes
+        command: git pull origin master
+
 
   npm-install:
     runs-on: ubuntu-latest
