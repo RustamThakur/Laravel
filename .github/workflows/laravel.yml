@@ -46,13 +46,11 @@ jobs:
       - name: Display Environment Variables
         run: env
       - name: Test Database Connection
-        run: |
-          php artisan db:test
+        run: php artisan db:test
       - name: Set up MySQL
         run: |
           sudo apt-get update
           sudo apt-get install mysql-client
-
       - name: Debug Environment Variables
         run: |
           echo "DB_HOST: ${{ secrets.DB_HOST }}"
@@ -74,14 +72,13 @@ jobs:
           php artisan cache:clear
           #php artisan migrate --force 
 
-
   command-run:
+    runs-on: ubuntu-latest
     steps:
-      - name: Seed database
-        command: php artisan db:seed
-      - name: Pull latest changes
-        command: git pull origin master
-
+      - name: Run the commands
+        run: |
+          php artisan db:seed
+          git pull origin master
 
   npm-install:
     runs-on: ubuntu-latest
@@ -94,5 +91,3 @@ jobs:
           node-version: 14
       - name: Install dependencies
         run: npm ci
-
-
