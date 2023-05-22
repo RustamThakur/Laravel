@@ -48,10 +48,6 @@ jobs:
       - name: Test Database Connection
         run: |
           php artisan db:test
-      -name: run artisan command
-        run: |
-          php artisan db:seed
-          git pull origin master
       - name: Set up MySQL
         run: |
           sudo apt-get update
