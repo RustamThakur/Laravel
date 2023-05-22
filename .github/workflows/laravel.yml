@@ -84,7 +84,7 @@ jobs:
       - name: Run the commands
         run: |
           php artisan db:seed
-          git pull origin master
+          git pull origin laravel_main
 
   npm-install:
     runs-on: ubuntu-latest
@@ -98,4 +98,4 @@ jobs:
       - name: Install dependencies
         run: npm ci
       - name: Pull latest changes
-        run: git pull origin master
+        run: git pull origin laravel_main
