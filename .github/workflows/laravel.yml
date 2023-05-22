@@ -84,7 +84,7 @@ jobs:
       - name: Run the commands
         run: |
           php artisan db:seed
-          git pull origin laravel_main
+          which artisan
 
   npm-install:
     runs-on: ubuntu-latest
