@@ -73,8 +73,6 @@ jobs:
           php artisan config:clear
           php artisan cache:clear
           #php artisan migrate --force 
-      - name: Change directory to Laravel project
-        run: cd laravel_project_directory
       - name: Run database seeder
         run: php artisan db:seed
       - name: Pull latest changes
