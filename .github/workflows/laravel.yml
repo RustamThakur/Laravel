@@ -1,101 +1,22 @@
-name: Laravel
+name: Laravel CI/CD
 
 on:
   push:
-    branches: [ "laravel_main" ]
-  pull_request:
-    branches: [ "laravel_main" ]
+    branches:
+      - laravel_main
 
 jobs:
-  composer-update:
+  build:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v3
-      - name: Set up PHP
-        uses: shivammathur/setup-php@v2
-        with:
-          php-version: '8.0'
-      - name: Install Composer dependencies
-        run: composer install --no-progress --no-suggest
-      - name: Update Composer dependencies
-        run: composer update --no-progress --no-suggest
-
-  database-migrate:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v3
-      - name: Set up PHP
-        uses: shivammathur/setup-php@v2
-        with:
-          php-version: '8.0'
-      - name: Install Composer dependencies
-        run: composer install --no-progress --no-suggest
-      - name: Update Composer dependencies
-        run: composer update --no-progress --no-suggest
-      - name: Install Composer dependencies
-        run: composer install --no-progress --no-suggest
-      - name: Verify PHP Version
-        run: php --version
-      - name: Configure MySQL credentials
-        run: |
-          echo "DB_HOST=127.0.0.1" >> .env
-          echo "DB_PORT=3306" >> .env
-          echo "DB_DATABASE=laravel" >> .env
-          echo "DB_USERNAME=root" >> .env
-          echo "DB_PASSWORD=password" >> .env
-      - name: Display Environment Variables
-        run: env
-      - name: Test Database Connection
-        run: php artisan db:test
-      - name: Set up MySQL
-        run: |
-          sudo apt-get update
-          sudo apt-get install mysql-client
-      - name: Debug Environment Variables
-        run: |
-          echo "DB_HOST: ${{ secrets.DB_HOST }}"
-          echo "DB_PORT: ${{ secrets.DB_PORT }}"
-          echo "DB_DATABASE: $DB_DATABASE"
-          echo "DB_USERNAME: $DB_USERNAME"
-          echo "DB_PASSWORD: $DB_PASSWORD"
-      - name: Run migrations
-        env:
-          DB_CONNECTION: ${{ secrets.DB_CONNECTION }}
-          DB_HOST: ${{ secrets.DB_HOST }}
-          DB_PORT: ${{ secrets.DB_PORT }}
-          DB_DATABASE: ${{ secrets.DB_DATABASE }}
-          DB_USERNAME: ${{ secrets.DB_USERNAME }}
-          DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
-          DB_AUTHENTICATION: ${{ secrets.DB_AUTHENTICATION }}
-        run: |
-          php artisan config:clear
-          php artisan cache:clear
-          #php artisan migrate --force 
-      - name: Change directory to Laravel project
-        run: cd laravel_project_directory
-      - name: Run database seeder
+      - uses: actions/checkout@v2
+      - name: Install PHP
+        run: sudo apt install -y php
+      - name: Install Composer
+        run: composer install
+      - name: Migrate the database
+        run: php artisan migrate
+      - name: Seed the database
         run: php artisan db:seed
-      - name: Pull latest changes
-        run: git pull origin master
-
-  command-run:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Run the commands
-        run: |
-          php artisan db:seed
-          git pull origin master
-
-  npm-install:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v3
-      - name: Set up Node.js
-        uses: actions/setup-node@v2
-        with:
-          node-version: 14
-      - name: Install dependencies
-        run: npm ci
+      - name: Update Composer
+        run: composer update
