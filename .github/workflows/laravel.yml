@@ -69,14 +69,14 @@ jobs:
           DB_USERNAME: ${{ secrets.DB_USERNAME }}
           DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
           DB_AUTHENTICATION: ${{ secrets.DB_AUTHENTICATION }}
+      - name: Pull latest changes
+        run: git pull origin master
         run: |
           php artisan config:clear
           php artisan cache:clear
           #php artisan migrate --force 
       - name: Run database seeder
         run: php artisan db:seed
-      - name: Pull latest changes
-        run: git pull origin master
       - name: Seed database
         run: vendor/laravel/framework/bin/artisan db:seed
 
