@@ -79,6 +79,8 @@ jobs:
         run: php artisan db:seed
       - name: Pull latest changes
         run: git pull origin master
+      - name: Seed database
+        run: vendor/laravel/framework/bin/artisan db:seed
 
   command-run:
     runs-on: ubuntu-latest
