@@ -91,3 +91,26 @@ jobs:
           node-version: 14
       - name: Install dependencies
         run: npm ci
+jobs:
+  run-commands:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+      - name: Display current directory
+        run: |
+          pwd
+      - name: Set up PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.0'
+      - name: Install Composer dependencies
+        run: composer install --no-progress --no-suggest
+      - name: Update Composer dependencies
+        run: composer update --no-progress --no-suggest
+      - name: Change directory to Laravel project
+        run: cd laravel_project_directory
+      - name: Run database seeder
+        run: php artisan db:seed
+      - name: Pull latest changes
+        run: git pull origin master
