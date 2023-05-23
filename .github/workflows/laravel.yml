@@ -23,7 +23,7 @@ jobs:
       - name: Install Laravel Installer
         run: composer global require laravel/installer
       - name: Run artisan command
-        run: php Laravel/artisan db:seed
+        run: php Laravel/blob/laravel_main/artisan db:seed
 
   database-migrate:
     runs-on: ubuntu-latest
@@ -54,7 +54,7 @@ jobs:
       - name: Run migrations
         run: php Laravel/artisan migrate --force 
       - name: Run database seeder
-        run: php Laravel/artisan db:seed
+        run: php Laravel/blob/laravel_main/artisan db:seed
 
   command-run:
     runs-on: ubuntu-latest
