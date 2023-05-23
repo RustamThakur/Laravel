@@ -17,26 +17,13 @@ jobs:
         with:
           php-version: '8.0'
       - name: Install Composer dependencies
-        run: composer install
+        run: composer install --no-progress --no-suggest
       - name: Update Composer dependencies
-        run: composer update
-      - name: Install Composer
-        run: |
-          php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"
-          php composer-setup.php --install-dir=/usr/local/bin --filename=composer
-          php -r "unlink('composer-setup.php');"
-      - name: Run artisan command
-          working-directory: ./Laravel
-          run: php artisan db:seed
-
-
-
+        run: composer update --no-progress --no-suggest
       - name: Install Laravel Installer
         run: composer global require laravel/installer
-
       - name: Run artisan command
         run: php Laravel/artisan db:seed
-
 
   database-migrate:
     runs-on: ubuntu-latest
@@ -49,12 +36,6 @@ jobs:
           php-version: '8.0'
       - name: Install Composer dependencies
         run: composer install --no-progress --no-suggest
-      - name: Update Composer dependencies
-        run: composer update --no-progress --no-suggest
-      - name: Install Composer dependencies
-        run: composer install --no-progress --no-suggest
-      - name: Verify PHP Version
-        run: php --version
       - name: Configure MySQL credentials
         run: |
           echo "DB_HOST=127.0.0.1" >> .env
@@ -65,44 +46,30 @@ jobs:
       - name: Display Environment Variables
         run: env
       - name: Test Database Connection
-        run: php artisan db:test
+        run: php Laravel/artisan db:test
       - name: Set up MySQL
         run: |
           sudo apt-get update
           sudo apt-get install mysql-client
-      - name: Debug Environment Variables
-        run: |
-          echo "DB_HOST: ${{ secrets.DB_HOST }}"
-          echo "DB_PORT: ${{ secrets.DB_PORT }}"
-          echo "DB_DATABASE: $DB_DATABASE"
-          echo "DB_USERNAME: $DB_USERNAME"
-          echo "DB_PASSWORD: $DB_PASSWORD"
       - name: Run migrations
-        env:
-          DB_CONNECTION: ${{ secrets.DB_CONNECTION }}
-          DB_HOST: ${{ secrets.DB_HOST }}
-          DB_PORT: ${{ secrets.DB_PORT }}
-          DB_DATABASE: ${{ secrets.DB_DATABASE }}
-          DB_USERNAME: ${{ secrets.DB_USERNAME }}
-          DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
-          DB_AUTHENTICATION: ${{ secrets.DB_AUTHENTICATION }}
-        run: |
-          php artisan config:clear
-          php artisan cache:clear
-          env
-          #php artisan migrate --force 
+        run: php Laravel/artisan migrate --force 
       - name: Run database seeder
-        run: php artisan db:seed
-      - name: Seed database
-        run: vendor/laravel/framework/bin/artisan db:seed
+        run: php Laravel/artisan db:seed
 
   command-run:
     runs-on: ubuntu-latest
     steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+      - name: Set up PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.0'
       - name: Run the commands
         run: |
-          php artisan db:seed
-          which artisan
+          php Laravel/artisan db:seed
+          php Laravel/artisan migrate --force 
+          php Laravel/artisan cache:clear
 
   npm-install:
     runs-on: ubuntu-latest
