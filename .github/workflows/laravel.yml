@@ -20,6 +20,8 @@ jobs:
         run: composer install --no-progress --no-suggest
       - name: Update Composer dependencies
         run: composer update --no-progress --no-suggest
+      -name: laravel/installer
+        run: composer global require laravel/installer
 
   database-migrate:
     runs-on: ubuntu-latest
