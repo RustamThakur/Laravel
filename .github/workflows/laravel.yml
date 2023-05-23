@@ -72,6 +72,7 @@ jobs:
         run: |
           php artisan config:clear
           php artisan cache:clear
+          env
           #php artisan migrate --force 
       - name: Run database seeder
         run: php artisan db:seed
