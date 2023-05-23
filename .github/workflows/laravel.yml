@@ -47,8 +47,6 @@ jobs:
         run: |
           sudo apt-get update
           sudo apt-get install mysql-client
-      - name: Run migrations
-        run: php artisan migrate --force
 
   command-run:
     runs-on: ubuntu-latest
