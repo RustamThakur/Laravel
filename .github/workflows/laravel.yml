@@ -20,10 +20,6 @@ jobs:
         run: composer install --no-progress --no-suggest
       - name: Update Composer dependencies
         run: composer update --no-progress --no-suggest
-      - name: Install Laravel Installer
-        run: composer global require laravel/installer
-      - name: Run artisan command
-        run: php artisan db:seed
 
   database-migrate:
     runs-on: ubuntu-latest
@@ -46,15 +42,13 @@ jobs:
       - name: Display Environment Variables
         run: env
       - name: Test Database Connection
-        run: php Laravel/artisan db:test
+        run: php artisan db:test
       - name: Set up MySQL
         run: |
           sudo apt-get update
           sudo apt-get install mysql-client
       - name: Run migrations
-        run: php artisan migrate --force 
-      - name: Run database seeder
-        run: php artisan db:seed
+        run: php artisan migrate --force
 
   command-run:
     runs-on: ubuntu-latest
@@ -68,8 +62,10 @@ jobs:
       - name: Run the commands
         run: |
           php artisan db:seed
-          php artisan migrate --force 
+          #php artisan migrate 
           php artisan cache:clear
+          git pull origin laravel_main
+          composer update 
 
   npm-install:
     runs-on: ubuntu-latest
@@ -82,5 +78,5 @@ jobs:
           node-version: 14
       - name: Install dependencies
         run: npm ci
-      - name: Pull latest changes
-        run: git pull origin laravel_main
+      #- name: Pull latest changes
+        #run: git pull origin laravel_main
