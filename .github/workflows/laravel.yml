@@ -66,8 +66,8 @@ jobs:
         run: git pull origin laravel_main
       - name: Run composer update
         run: composer update
-      - name: Run artisan migrate
-        run: php artisan migrate
+      #- name: Run artisan migrate
+        #run: php artisan migrate
         #php artisan migrate
 
   npm-install:
