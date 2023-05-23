@@ -23,7 +23,7 @@ jobs:
       - name: Install Laravel Installer
         run: composer global require laravel/installer
       - name: Run artisan command
-        run: php Laravel/blob/laravel_main/artisan db:seed
+        run: php artisan db:seed
 
   database-migrate:
     runs-on: ubuntu-latest
@@ -46,15 +46,15 @@ jobs:
       - name: Display Environment Variables
         run: env
       - name: Test Database Connection
-        run: php Laravel/blob/laravel_main/artisan db:test
+        run: php Laravel/artisan db:test
       - name: Set up MySQL
         run: |
           sudo apt-get update
           sudo apt-get install mysql-client
       - name: Run migrations
-        run: php Laravel/blob/laravel_main/artisan migrate --force 
+        run: php artisan migrate --force 
       - name: Run database seeder
-        run: php Laravel/blob/laravel_main/artisan db:seed
+        run: php artisan db:seed
 
   command-run:
     runs-on: ubuntu-latest
@@ -67,9 +67,9 @@ jobs:
           php-version: '8.0'
       - name: Run the commands
         run: |
-          php Laravel/artisan db:seed
-          php Laravel/artisan migrate --force 
-          php Laravel/artisan cache:clear
+          php artisan db:seed
+          php artisan migrate --force 
+          php artisan cache:clear
 
   npm-install:
     runs-on: ubuntu-latest
