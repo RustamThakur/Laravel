@@ -41,12 +41,13 @@ jobs:
           echo "DB_PASSWORD=password" >> .env
       - name: Display Environment Variables
         run: env
-      - name: Test Database Connection
-        run: php artisan db:test
       - name: Set up MySQL
         run: |
           sudo apt-get update
           sudo apt-get install mysql-client
+      - name: Test Database Connection
+        run: php artisan db:test
+      
 
   command-run:
     runs-on: ubuntu-latest
